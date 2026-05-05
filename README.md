@@ -14,7 +14,7 @@
 
 ---
 
-Anti-AFK application specifically designed for **Sober** (Roblox on Linux). Currently focused on **Hyprland** environment (using "Swapper" mode).
+Anti-AFK application specifically designed for **Sober** (Roblox on Linux). Currently focused on **Hyprland** environment (using "Swapper" mode) and KDE Plasma 6 environment (using "Plasma" mode).
 
 ## ✨ Features
 
