@@ -8,7 +8,6 @@
 
 <p align="center" width="100%">
   <a href="https://github.com/Agzes/AntiAFK-RBX-Sober/issues/new?template=feature_request.md"><img src="readme/got-ideas-to-add.png" alt="Got ideas to add?" style="width:32%; min-width:190px;"></a>
-  <a href="https://boosty.to/agzes/donate"><img src="readme/want-to-support.png" alt="Want to support?" style="width:32%; min-width:190px;"></a>
   <a href="https://github.com/Agzes/AntiAFK-RBX-Sober/issues/new?template=bug_report.md"><img src="readme/bug-write-issue.png" alt="Bug? Write issue!" style="width:32%; min-width:190px;"></a>
 </p>
 
