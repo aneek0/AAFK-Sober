@@ -32,30 +32,12 @@ jobs:
       - name: Build AppImage
         run: |
           VERSION="${{ steps.version.outputs.VERSION }}"
-
           mkdir -p AppDir/usr/bin AppDir/usr/share/applications AppDir/usr/share/icons/hicolor/scalable/apps
-
           cp target/release/AntiAFK-RBX-Sober AppDir/usr/bin/
           cp assets/logo.png AppDir/usr/share/icons/hicolor/scalable/apps/antiafk-rbx-sober.png
-
-          cat > AppDir/usr/share/applications/dev.agzes.antiafk-rbx-sober.desktop << 'EOF'
-          [Desktop Entry]
-          Name=AntiAFK-RBX-Sober
-          Exec=AntiAFK-RBX-Sober
-          Icon=antiafk-rbx-sober
-          Type=Application
-          Categories=Utility;
-          Comment=Anti-AFK application for Roblox (Sober)
-          EOF
-
-          cat > AppDir/AppRun << 'RUNEOF'
-          #!/bin/bash
-          APPDIR="$(dirname "$(readlink -f "$0")")"
-          export XDG_DATA_DIRS="${APPDIR}/usr/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
-          exec "${APPDIR}/usr/bin/AntiAFK-RBX-Sober" "$@"
-          RUNEOF
+          cp dev.agzes.antiafk-rbx-sober.desktop AppDir/usr/share/applications/
+          printf '#!/bin/bash\nAPPDIR="$(dirname "$(readlink -f "$0")")"\nexport XDG_DATA_DIRS="${APPDIR}/usr/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"\nexec "${APPDIR}/usr/bin/AntiAFK-RBX-Sober" "$@"\n' > AppDir/AppRun
           chmod +x AppDir/AppRun
-
           curl -fsSL -o appimagetool "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
           chmod +x appimagetool
           ARCH=x86_64 ./appimagetool AppDir "Sober-AntiAFK-v${VERSION}.AppImage"
