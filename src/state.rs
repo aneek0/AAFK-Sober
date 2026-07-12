@@ -23,6 +23,7 @@ pub struct AppState {
     pub fps_limit: u32,
     pub stop_limit_on_focus: bool,
     pub stealth: bool,
+    pub niri_pin: bool,
     pub last_run_version: Option<String>,
     pub shown_warning: bool,
     #[serde(skip)]
@@ -49,6 +50,7 @@ impl Default for AppState {
             fps_limit: 30,
             stop_limit_on_focus: false,
             stealth: false,
+            niri_pin: false,
             last_run_version: None,
             shown_warning: false,
             manually_stopped: false,
@@ -125,4 +127,28 @@ impl AppState {
             }
         }
     }
+
+    const NIRI_RULE_FILE: &str = "antiafk-rbx-sober.kdl";
+
+    fn get_niri_rules_dir() -> Option<PathBuf> {
+        let mut path = dirs::config_dir()?;
+        path.push("niri");
+        path.push("config.d");
+        Some(path)
+    }
+
+    pub fn apply_niri_rule(enable: bool) {
+        let Some(dir) = Self::get_niri_rules_dir() else { return };
+        let _ = fs::create_dir_all(&dir);
+        let file_path = dir.join(Self::NIRI_RULE_FILE);
+        if enable {
+            let content = format!(
+                "window-rule {{\n    match app-id=\"{APP_ID}\"\n    open-floating false\n    max-width 467\n    max-height 690\n    min-width 467\n    min-height 690\n}}\n"
+            );
+            let _ = fs::write(&file_path, content);
+        } else {
+            let _ = fs::remove_file(&file_path);
+        }
+    }
+
 }

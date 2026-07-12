@@ -1,11 +1,12 @@
 [package]
-name = "AntiAFK-RBX-Sober"
-version = "0.2.1"
+name = "aafk-sober"
+version = "0.2.2"
 edition = "2024"
-description = "AntiAFK application for Sober (Roblox for Linux) on Linux"
-repository = "https://github.com/aneek0/Sober-AntiAFK"
+description = "Anti-AFK application for Sober (Roblox on Linux)"
+repository = "https://github.com/aneek0/AAFK-Sober"
 license = "MIT"
-keywords = ["roblox", "linux", "antiafk", "sober", "hyprland"]
+keywords = ["roblox", "linux", "antiafk", "sober", "niri"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 gtk = { version = "0.7", package = "gtk4", features = ["v4_10"] }
@@ -21,7 +22,7 @@ dirs = "5.0"
 nix = "0.23"
 
 [package.metadata.appimage]
-name = "AntiAFK-RBX-Sober"
+name = "aafk-sober"
 icon = "assets/logo.png"
 desktop_entry = "dev.agzes.antiafk-rbx-sober.desktop"
 auto_link = true

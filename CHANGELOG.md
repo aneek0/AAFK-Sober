@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.2] Niri Pin Window + Rename - 2026-07-12
+
+### Added
+- **Niri: Pin Window** setting — adds a Niri window rule to open tiled with fixed size (467×690).
+- Niri window rule file: `~/.config/niri/config.d/antiafk-rbx-sober.kdl`.
+
+### Changed
+- Package renamed to `aafk-sober` on crates.io.
+
+---
+
 ## [0.2.1] Niri Support - 2026-07-11
 
 ### Added

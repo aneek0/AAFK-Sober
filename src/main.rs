@@ -278,6 +278,12 @@ fn main() -> glib::ExitCode {
     }
 
     let state: SharedState = Arc::new(Mutex::new(state::AppState::load()));
+    {
+        let s = state.lock().unwrap();
+        if s.niri_pin {
+            state::AppState::apply_niri_rule(true);
+        }
+    }
     backend::start_backend(state.clone());
     let app = Application::builder().application_id(state::APP_ID).build();
     let state_ui = state.clone();

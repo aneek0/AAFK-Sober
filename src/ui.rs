@@ -9,7 +9,7 @@ use gtk::{
 };
 use std::process::Command;
 
-const CURRENT_VERSION: &str = "0.2.1";
+const CURRENT_VERSION: &str = "0.2.2";
 
 const CSS: &str = "
     .main-window { background-color: @theme_bg_color; color: @theme_fg_color; }
@@ -726,6 +726,18 @@ pub fn build_ui(app: &Application, state: SharedState) -> ApplicationWindow {
         false,
     );
     auto_list.append(&stealth_row);
+    let niri_pin_sw = Switch::new();
+    niri_pin_sw.set_active(initial_state.niri_pin);
+    let (niri_pin_row, _) = create_row(
+        "Niri: Pin Window",
+        Some("Add window rule to open tiled"),
+        &niri_pin_sw,
+        None,
+        false,
+        false,
+    );
+    niri_pin_row.set_visible(is_niri_detected);
+    auto_list.append(&niri_pin_row);
     let reconnect_sw = Switch::new();
     reconnect_sw.set_active(initial_state.auto_reconnect);
     let (row, _) = create_row(
@@ -815,6 +827,7 @@ pub fn build_ui(app: &Application, state: SharedState) -> ApplicationWindow {
         let fps_capper_live = fps_capper_sw.clone();
         let fps_limit_live = fps_limit_spin.clone();
         let stop_limit_on_focus_live = unlock_focus_sw.clone();
+        let niri_pin_live = niri_pin_sw.clone();
 
         move || {
             let mut s = state_arc.lock().unwrap();
@@ -837,6 +850,11 @@ pub fn build_ui(app: &Application, state: SharedState) -> ApplicationWindow {
             s.fps_capper = fps_capper_live.is_active();
             s.fps_limit = fps_limit_live.value() as u32;
             s.stop_limit_on_focus = stop_limit_on_focus_live.is_active();
+            let new_niri_pin = niri_pin_live.is_active();
+            if new_niri_pin != s.niri_pin {
+                crate::state::AppState::apply_niri_rule(new_niri_pin);
+            }
+            s.niri_pin = new_niri_pin;
             s.save();
         }
     };
@@ -860,6 +878,11 @@ pub fn build_ui(app: &Application, state: SharedState) -> ApplicationWindow {
 
     let us = update_state.clone();
     stealth_sw.connect_state_set(move |_, _| {
+        us();
+        glib::Propagation::Proceed
+    });
+    let us = update_state.clone();
+    niri_pin_sw.connect_state_set(move |_, _| {
         us();
         glib::Propagation::Proceed
     });
