@@ -17,7 +17,7 @@ Supports **Hyprland**, **KDE Plasma 6**, and **Niri**.
 
 ### Cargo
 ```bash
-cargo install AntiAFK-RBX-Sober
+cargo install aafk-sober
 ```
 
 ### AppImage
